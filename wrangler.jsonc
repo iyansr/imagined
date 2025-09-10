@@ -16,7 +16,7 @@
 	},
 	"assets": {
 		"directory": ".open-next/assets",
-		"binding": "ASSETS"
+		"binding": "IMAGINED_ASSETS"
 	}
 	/**
 	 * Smart Placement
