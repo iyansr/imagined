@@ -48,15 +48,6 @@ export default function Home() {
                   accusamus minima dolorem temporibus sint possimus.
                 </p>
 
-                {/* Tags */}
-                {/* <div className="mb-3 flex flex-wrap gap-1">
-                  {prompt.tags.slice(0, 3).map((tag) => (
-                    <Badge key={tag} variant="outline" className="text-xs">
-                      {tag}
-                    </Badge>
-                  ))}
-                </div> */}
-
                 {/* Author */}
                 <div className="text-muted-foreground text-xs">by 0xiyan</div>
               </div>
