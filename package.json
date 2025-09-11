@@ -7,12 +7,11 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
+    "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview --port 3200",
     "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
     "cf-typegen": "wrangler types --env-interface CloudflareEnv cloudflare-env.d.ts",
     "db:generate": "drizzle-kit generate",
-    "db:push": "drizzle-kit push",
-    "db:push:prod": "drizzle-kit push --config drizzle-prod.config.ts"
+    "db:push": "drizzle-kit push"
   },
   "dependencies": {
     "@opennextjs/cloudflare": "^1.8.2",
@@ -24,7 +23,7 @@
     "drizzle-orm": "^0.44.5",
     "lucide-react": "^0.543.0",
     "next": "15.4.6",
-    "postgres": "^3.4.7",
+    "pg": "^8.16.3",
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "tailwind-merge": "^3.3.1"
@@ -33,6 +32,7 @@
     "@biomejs/biome": "2.2.4",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^24.3.1",
+    "@types/pg": "^8.15.5",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "drizzle-kit": "^0.31.4",
