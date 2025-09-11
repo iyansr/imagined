@@ -17,14 +17,17 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
+  modal,
+}: {
   children: React.ReactNode;
-}>) {
+  modal: React.ReactNode;
+}) {
   return (
     <html lang="en" className="dark">
       <body className={`${ibmPlexMono.variable} antialiased`}>
         <div className="grid min-h-screen grid-rows-[auto_1fr_auto]">
           <Header />
+          {modal}
           {children}
           <footer />
         </div>

@@ -1,4 +1,5 @@
 import { Search } from 'lucide-react';
+import Link from 'next/link';
 
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -28,31 +29,30 @@ export default function Home() {
 
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {Array.from({ length: 10 }).map((_, index) => (
-          <Card
-            key={String(index)}
-            className="group rounded-none p-0 transition-all duration-200 hover:ring hover:ring-primary"
-          >
-            <CardContent className="p-0">
-              {/* Image Preview */}
-              <div className="relative aspect-square overflow-hidden bg-muted" />
+          <Link href={`/p/${String(index)}`} key={String(index)}>
+            <Card className="group rounded-none p-0 transition-all duration-200 hover:ring hover:ring-primary">
+              <CardContent className="p-0">
+                {/* Image Preview */}
+                <div className="relative aspect-square overflow-hidden bg-muted" />
 
-              {/* Content */}
-              <div className="p-4">
-                <h3 className="mb-2 text-balance font-semibold text-foreground">
-                  Title
-                </h3>
-                <p className="mb-3 line-clamp-3 text-muted-foreground text-sm leading-relaxed">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo,
-                  eius rerum! Velit doloribus ipsa quibusdam voluptate eos
-                  porro. Esse, soluta fuga. Voluptatem in, exercitationem
-                  accusamus minima dolorem temporibus sint possimus.
-                </p>
+                {/* Content */}
+                <div className="p-4">
+                  <h3 className="mb-2 text-balance font-semibold text-foreground">
+                    Title
+                  </h3>
+                  <p className="mb-3 line-clamp-3 text-muted-foreground text-sm leading-relaxed">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Nemo, eius rerum! Velit doloribus ipsa quibusdam voluptate
+                    eos porro. Esse, soluta fuga. Voluptatem in, exercitationem
+                    accusamus minima dolorem temporibus sint possimus.
+                  </p>
 
-                {/* Author */}
-                <div className="text-muted-foreground text-xs">by 0xiyan</div>
-              </div>
-            </CardContent>
-          </Card>
+                  {/* Author */}
+                  <div className="text-muted-foreground text-xs">by 0xiyan</div>
+                </div>
+              </CardContent>
+            </Card>
+          </Link>
         ))}
       </div>
     </main>
