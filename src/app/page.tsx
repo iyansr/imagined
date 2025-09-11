@@ -26,11 +26,11 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {Array.from({ length: 10 }).map((_, index) => (
           <Card
             key={String(index)}
-            className="group cursor-pointer p-0 transition-all duration-200 hover:ring hover:ring-primary"
+            className="group rounded-none p-0 transition-all duration-200 hover:ring hover:ring-primary"
           >
             <CardContent className="p-0">
               {/* Image Preview */}

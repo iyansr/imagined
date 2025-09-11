@@ -1,8 +1,52 @@
+'use client';
+
 import Link from 'next/link';
 
 import { Button } from '@/components/ui/button';
+import { authClient } from '@/lib/auth/auth-client';
+
+import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from './ui/dropdown-menu';
 
 export function Header() {
+  const { data: session, isPending } = authClient.useSession();
+
+  const renderSession = () => {
+    if (isPending) {
+      return null;
+    }
+    if (session) {
+      return (
+        <DropdownMenu>
+          <DropdownMenuTrigger>
+            <Avatar className="size-7">
+              <AvatarImage src={session.user.image || ''} />
+              <AvatarFallback>{session.user.name || ''}</AvatarFallback>
+            </Avatar>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <DropdownMenuItem asChild>
+              <Link href="/profile">Profile</Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem asChild>
+              <Link href="/create">Create</Link>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      );
+    }
+    return (
+      <Link href="/auth">
+        <Button size="sm">Sign In</Button>
+      </Link>
+    );
+  };
+
   return (
     <header className="border-border border-b bg-card">
       <div className="container mx-auto flex items-center justify-between px-4 py-4">
@@ -44,9 +88,7 @@ export function Header() {
 								Add Prompt
 							</Button>
 						</Link> */}
-          <Link href="/auth">
-            <Button size="sm">Sign In</Button>
-          </Link>
+          {renderSession()}
         </div>
       </div>
     </header>
