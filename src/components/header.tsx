@@ -44,7 +44,7 @@ export function Header() {
 								Add Prompt
 							</Button>
 						</Link> */}
-          <Link href="/signin">
+          <Link href="/auth">
             <Button size="sm">Sign In</Button>
           </Link>
         </div>
