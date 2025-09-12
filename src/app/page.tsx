@@ -66,7 +66,7 @@ export default async function Home() {
                     {prompt.title}
                   </h3>
                 </Link>
-                <p className="mb-3 line-clamp-3 text-muted-foreground text-sm leading-relaxed">
+                <p className="mb-3 line-clamp-3 text-muted-foreground text-xs leading-relaxed">
                   {prompt.prompt}
                 </p>
 
