@@ -28,7 +28,7 @@ export default function RootLayout({
         <div className="grid min-h-screen grid-rows-[auto_1fr_auto]">
           <Header />
           {modal}
-          {children}
+          <div className="pt-14">{children}</div>
           <footer />
         </div>
       </body>

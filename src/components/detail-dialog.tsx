@@ -15,7 +15,7 @@ export function DetailDialog({ children }: PropsWithChildren) {
   return (
     <Dialog defaultOpen={true} open={true} onOpenChange={handleOpenChange}>
       <DialogOverlay>
-        <DialogContent className="max-h-[80vh] overflow-y-hidden sm:max-w-4xl">
+        <DialogContent className="max-h-[80vh] overflow-y-auto sm:max-w-4xl">
           {children}
         </DialogContent>
       </DialogOverlay>

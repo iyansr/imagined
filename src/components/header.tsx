@@ -48,7 +48,7 @@ export function Header() {
   };
 
   return (
-    <header className="border-border border-b bg-card">
+    <header className="fixed top-0 right-0 left-0 z-50 border-border border-b bg-card">
       <div className="container mx-auto flex items-center justify-between px-4 py-4">
         <div className="flex items-center space-x-8">
           <Link href="/">
