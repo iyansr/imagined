@@ -1,7 +1,7 @@
 /** biome-ignore-all lint/performance/noImgElement: <ignored> */
 'use client';
 
-import { Upload, X } from 'lucide-react';
+import { Loader2Icon, Upload, X } from 'lucide-react';
 import { useRef, useState } from 'react';
 import { toast } from 'sonner';
 
@@ -155,7 +155,7 @@ export default function CreatePromptPage() {
               />
               <div className="flex justify-end">
                 <Button onClick={handleSubmit} disabled={isSubmitting}>
-                  Save
+                  <Loader2Icon className="animate-spin" /> Save
                 </Button>
               </div>
             </CardContent>

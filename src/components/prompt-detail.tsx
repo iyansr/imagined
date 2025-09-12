@@ -1,4 +1,7 @@
+'use client';
+
 import Image from 'next/image';
+import { toast } from 'sonner';
 
 import type { Prompt, User } from '@/lib/db/schema';
 
@@ -12,6 +15,16 @@ interface PromptDetailProps {
 }
 
 export function PromptDetail({ prompt }: PromptDetailProps) {
+  const handleCopyPrompt = () => {
+    navigator.clipboard.writeText(prompt.prompt);
+    toast.success('Prompt copied to clipboard');
+  };
+
+  const handleCopyLink = () => {
+    navigator.clipboard.writeText(window.location.href);
+    toast.success('Link copied to clipboard');
+  };
+
   return (
     <div className="grid grid-cols-1 gap-6 pt-6 md:grid-cols-3">
       <div className="md:col-span-1">
@@ -43,10 +56,12 @@ export function PromptDetail({ prompt }: PromptDetailProps) {
         </div>
 
         <div className="mt-4 flex items-center justify-end gap-4">
-          <Button size="sm" variant="outline">
+          <Button size="sm" variant="outline" onClick={handleCopyLink}>
             Share
           </Button>
-          <Button size="sm">Copy Prompt</Button>
+          <Button size="sm" onClick={handleCopyPrompt}>
+            Copy Prompt
+          </Button>
         </div>
       </div>
     </div>
