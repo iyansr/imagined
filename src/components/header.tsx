@@ -57,7 +57,7 @@ export function Header() {
         </div>
         <div className="flex items-center space-x-6">
           <nav className="hidden items-center space-x-6 md:flex">
-            <Link
+            {/* <Link
               href="#"
               className="text-muted-foreground text-sm transition-colors hover:text-foreground"
             >
@@ -80,7 +80,7 @@ export function Header() {
               className="text-muted-foreground text-sm transition-colors hover:text-foreground"
             >
               About
-            </Link>
+            </Link> */}
           </nav>
           {/* <Link href="/add-prompt">
 							<Button variant="outline" size="sm">

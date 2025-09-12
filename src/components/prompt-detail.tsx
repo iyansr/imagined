@@ -1,31 +1,45 @@
+import Image from 'next/image';
+
+import type { Prompt, User } from '@/lib/db/schema';
+
+import { Badge } from './ui/badge';
 import { Button } from './ui/button';
 
-export function PromptDetail() {
+interface PromptDetailProps {
+  prompt: Prompt & {
+    user: User;
+  };
+}
+
+export function PromptDetail({ prompt }: PromptDetailProps) {
   return (
     <div className="grid grid-cols-1 gap-6 pt-6 md:grid-cols-3">
       <div className="md:col-span-1">
-        <div className="relative aspect-square w-full bg-muted" />
+        <div className="relative aspect-square w-full bg-muted">
+          <Image
+            src={prompt.thumbnailUrl || ''}
+            alt={prompt.title}
+            className="object-cover"
+            fill
+          />
+        </div>
+
+        <div className="mt-4 mb-3 flex flex-wrap gap-1">
+          {(prompt.tags || []).map((tag) => (
+            <Badge key={tag} className="text-xs">
+              {tag}
+            </Badge>
+          ))}
+        </div>
+
+        <div className="text-muted-foreground text-xs">
+          by {prompt.user.name}
+        </div>
       </div>
 
       <div className="flex flex-col md:col-span-2">
         <div className="max-h-[400px] overflow-y-auto bg-muted p-4 text-muted-foreground text-xs">
-          <pre className="whitespace-pre-wrap">
-            {`Create a photorealistic portrait of a young woman in her mid-20s with natural lighting and a shallow depth of field. 
-              
-She should have long, flowing dark brown hair with subtle highlights, warm olive skin tone, and expressive hazel eyes. 
-  
-Capture her in a candid moment, looking slightly off-camera with a genuine smile that creates subtle dimples. 
-
-She's wearing a casual white linen shirt with rolled-up sleeves against a soft, blurred neutral background. 
-
-The composition should follow the rule of thirds, with the focus on her face while maintaining professional studio-quality lighting that emphasizes the natural contours of her features. 
-
-Include delicate details like individual strands of hair catching the light and the natural texture of her skin. 
-
-The overall mood should be warm, inviting, and authentic, avoiding any artificial or overly processed looks. 
-
-Use a high-resolution format with particular attention to maintaining realistic skin textures and natural color grading.`}
-          </pre>
+          <pre className="whitespace-pre-wrap">{prompt.prompt}</pre>
         </div>
 
         <div className="mt-4 flex items-center justify-end gap-4">

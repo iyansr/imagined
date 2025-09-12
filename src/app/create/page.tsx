@@ -3,6 +3,7 @@
 
 import { Upload, X } from 'lucide-react';
 import { useRef, useState } from 'react';
+import { toast } from 'sonner';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -18,6 +19,7 @@ export default function CreatePromptPage() {
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [prompt, setPrompt] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -41,6 +43,49 @@ export default function CreatePromptPage() {
     }
   };
 
+  const handleSubmit = async () => {
+    try {
+      if (!selectedImage || !prompt) {
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append('image', selectedImage);
+      formData.append('prompt', prompt);
+      setIsSubmitting(true);
+
+      const res = await fetch('/api/create-prompt', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (!res.ok) {
+        setIsSubmitting(false);
+        toast.error(res.statusText);
+        return;
+      }
+
+      const json: {
+        success: boolean;
+        data?: { id: string };
+        message?: string;
+      } = await res.json();
+
+      if (!json.success) {
+        setIsSubmitting(false);
+        toast.error(json.message);
+        return;
+      }
+
+      toast.success('Prompt created successfully');
+      window.location.href = `/p/${json.data?.id}`;
+      setIsSubmitting(false);
+    } catch (error) {
+      toast.error((error as Error).message);
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <div className="container mx-auto px-4 pt-12">
       <div className="grid grid-cols-3 gap-4">
@@ -57,7 +102,7 @@ export default function CreatePromptPage() {
                 <button
                   type="button"
                   onClick={() => fileInputRef.current?.click()}
-                  className="w-full cursor-pointer rounded-lg border-2 border-secondary border-dashed p-8 text-center transition-colors hover:border-muted-foreground"
+                  className="w-full cursor-pointer rounded-lg border-2 border-input border-dashed p-8 text-center transition-colors hover:border-muted-foreground"
                 >
                   <Upload className="mx-auto mb-4 size-6 text-muted-foreground" />
                   <p className="mb-2 text-muted-foreground text-sm">
@@ -109,7 +154,9 @@ export default function CreatePromptPage() {
                 onChange={(e) => setPrompt(e.target.value)}
               />
               <div className="flex justify-end">
-                <Button>Save</Button>
+                <Button onClick={handleSubmit} disabled={isSubmitting}>
+                  Save
+                </Button>
               </div>
             </CardContent>
           </Card>

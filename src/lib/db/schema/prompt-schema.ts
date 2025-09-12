@@ -1,3 +1,4 @@
+import { relations } from 'drizzle-orm';
 import { pgTable, text, timestamp, uuid } from 'drizzle-orm/pg-core';
 
 import { user } from './auth-schema';
@@ -18,3 +19,12 @@ export const prompt = pgTable('prompt', {
     .$onUpdate(() => /* @__PURE__ */ new Date())
     .notNull(),
 });
+
+export const promptRelation = relations(prompt, ({ one }) => ({
+  user: one(user, {
+    fields: [prompt.userId],
+    references: [user.id],
+  }),
+}));
+
+export type Prompt = typeof prompt.$inferSelect;

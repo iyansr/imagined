@@ -3,6 +3,7 @@ import { IBM_Plex_Mono } from 'next/font/google';
 import './globals.css';
 
 import { Header } from '@/components/header';
+import { Toaster } from '@/components/ui/sonner';
 
 const ibmPlexMono = IBM_Plex_Mono({
   weight: '500',
@@ -32,6 +33,7 @@ export default function RootLayout({
           <footer />
         </div>
       </body>
+      <Toaster position="top-center" />
     </html>
   );
 }

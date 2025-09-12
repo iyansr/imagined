@@ -1,4 +1,4 @@
-import { betterAuth } from 'better-auth';
+import { betterAuth, type Session, type User } from 'better-auth';
 import { drizzleAdapter } from 'better-auth/adapters/drizzle';
 
 import { getDb } from '@/lib/db/database';
@@ -22,4 +22,9 @@ export const getAuth = () => {
       },
     },
   });
+};
+
+export type AuthSession = {
+  session: Session | null;
+  user: User | null;
 };
