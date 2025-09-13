@@ -33,9 +33,9 @@ export function Header() {
             {/* <DropdownMenuItem asChild>
               <Link href="/profile">Profile</Link>
             </DropdownMenuItem> */}
-            <DropdownMenuItem asChild>
+            {/* <DropdownMenuItem asChild>
               <Link href="/create">Create</Link>
-            </DropdownMenuItem>
+            </DropdownMenuItem> */}
             <DropdownMenuItem onClick={() => authClient.signOut()}>
               Sign Out
             </DropdownMenuItem>
@@ -60,6 +60,12 @@ export function Header() {
         </div>
         <div className="flex items-center space-x-6">
           <nav className="hidden items-center space-x-6 md:flex">
+            <Link
+              href="/create"
+              className="text-muted-foreground text-sm transition-colors hover:text-foreground"
+            >
+              Create
+            </Link>
             {/* <Link
               href="#"
               className="text-muted-foreground text-sm transition-colors hover:text-foreground"
