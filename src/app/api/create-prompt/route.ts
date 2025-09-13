@@ -56,6 +56,17 @@ export async function POST(req: Request) {
 
   const fileExtension = image.name.split('.').pop();
 
+  const MAX_FILE_SIZE = 5 * 1024 * 1024;
+  if (image.size > MAX_FILE_SIZE) {
+    return NextResponse.json(
+      {
+        success: false,
+        message: 'File size must be less than 5MB',
+      },
+      { status: 400 }
+    );
+  }
+
   const key = `${crypto.randomUUID()}.${fileExtension}`;
   await ctx.env.IMAGINED_BUCKET.put(key, image);
   // Generate URL based on environment

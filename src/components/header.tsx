@@ -30,11 +30,14 @@ export function Header() {
             </Avatar>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuItem asChild>
+            {/* <DropdownMenuItem asChild>
               <Link href="/profile">Profile</Link>
-            </DropdownMenuItem>
+            </DropdownMenuItem> */}
             <DropdownMenuItem asChild>
               <Link href="/create">Create</Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => authClient.signOut()}>
+              Sign Out
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

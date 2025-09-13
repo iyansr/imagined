@@ -15,6 +15,8 @@ import {
 } from '@/components/ui/card';
 import { Textarea } from '@/components/ui/textarea';
 
+const MAX_FILE_SIZE = 5 * 1024 * 1024;
+
 export default function CreatePromptPage() {
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
@@ -26,6 +28,10 @@ export default function CreatePromptPage() {
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
+      if (file.size > MAX_FILE_SIZE) {
+        toast.error('File size must be less than 5MB');
+        return;
+      }
       setSelectedImage(file);
       const reader = new FileReader();
       reader.onload = (e) => {
@@ -109,7 +115,7 @@ export default function CreatePromptPage() {
                     Click to upload an image
                   </p>
                   <p className="text-muted-foreground text-xs">
-                    PNG, JPG, WebP up to 10MB
+                    PNG, JPG, WebP up to 5MB
                   </p>
                 </button>
               ) : (
@@ -133,7 +139,7 @@ export default function CreatePromptPage() {
               <input
                 ref={fileInputRef}
                 type="file"
-                accept="image/*"
+                accept="image/png, image/jpeg, image/webp"
                 onChange={handleImageUpload}
                 className="hidden"
               />
