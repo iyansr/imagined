@@ -3,15 +3,13 @@
 import Image from 'next/image';
 import { toast } from 'sonner';
 
-import type { Prompt, User } from '@/lib/db/schema';
+import type { Prompt } from '@/lib/db/schema';
 
 import { Badge } from './ui/badge';
 import { Button } from './ui/button';
 
 interface PromptDetailProps {
-  prompt: Prompt & {
-    user: User;
-  };
+  prompt: Prompt;
 }
 
 export function PromptDetail({ prompt }: PromptDetailProps) {
@@ -43,10 +41,6 @@ export function PromptDetail({ prompt }: PromptDetailProps) {
               {tag}
             </Badge>
           ))}
-        </div>
-
-        <div className="text-muted-foreground text-xs">
-          by {prompt.user.name}
         </div>
       </div>
 

@@ -5,6 +5,8 @@ import './globals.css';
 import { Header } from '@/components/header';
 import { Toaster } from '@/components/ui/sonner';
 
+import { Provider } from './provider';
+
 const ibmPlexMono = IBM_Plex_Mono({
   weight: '500',
   variable: '--font-ibm-plex-mono',
@@ -25,16 +27,18 @@ export default function RootLayout({
   modal: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="dark">
-      <body className={`${ibmPlexMono.variable} antialiased`}>
-        <div className="grid min-h-screen grid-rows-[auto_1fr_auto]">
-          <Header />
-          {modal}
-          <div className="pt-14">{children}</div>
-          <footer />
-        </div>
-      </body>
-      <Toaster position="top-center" />
+    <html lang="en" className="dark" suppressHydrationWarning>
+      <Provider>
+        <body className={`${ibmPlexMono.variable} antialiased`}>
+          <div className="grid min-h-screen grid-rows-[auto_1fr_auto]">
+            <Header />
+            {modal}
+            <div className="pt-14">{children}</div>
+            <footer />
+          </div>
+          <Toaster position="top-center" />
+        </body>
+      </Provider>
     </html>
   );
 }

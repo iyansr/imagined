@@ -26,7 +26,9 @@ export function Header() {
           <DropdownMenuTrigger>
             <Avatar className="size-7">
               <AvatarImage src={session.user.image || ''} />
-              <AvatarFallback>{session.user.name || ''}</AvatarFallback>
+              <AvatarFallback>
+                {(session.user.name || '').charAt(0).toUpperCase()}
+              </AvatarFallback>
             </Avatar>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
