@@ -28,7 +28,8 @@ import { getDb } from '@/lib/db/database';
  * @see https://trpc.io/docs/server/context
  */
 export const createTRPCContext = async (opts: { headers: Headers }) => {
-  const session = (await getAuth().api.getSession({
+  const auth = await getAuth();
+  const session = (await auth.api.getSession({
     headers: await headers(), // you need to pass the headers object.
   })) as unknown as AuthSession;
 

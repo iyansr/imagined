@@ -14,7 +14,9 @@ export async function POST(req: Request) {
   const image = formData.get('image') as File;
   const promptString = formData.get('prompt') as string;
 
-  const session = (await getAuth().api.getSession({
+  const auth = await getAuth();
+
+  const session = (await auth.api.getSession({
     headers: await headers(), // you need to pass the headers object.
   })) as unknown as AuthSession;
 

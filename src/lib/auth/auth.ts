@@ -5,8 +5,8 @@ import { drizzleAdapter } from 'better-auth/adapters/drizzle';
 import { getDb } from '@/lib/db/database';
 import * as schema from '@/lib/db/schema';
 
-export const getAuth = () => {
-  const ctx = getCloudflareContext();
+export const getAuth = async () => {
+  const ctx = await getCloudflareContext({ async: true });
   return betterAuth({
     database: drizzleAdapter(getDb(), {
       provider: 'pg',

@@ -2,7 +2,8 @@ import { getAuth } from '@/lib/auth/auth';
 
 function toNextJsHandler() {
   const handler = async (request: Request) => {
-    return getAuth().handler(request);
+    const auth = await getAuth();
+    return auth.handler(request);
   };
   return {
     GET: handler,
