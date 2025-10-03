@@ -1,3 +1,4 @@
+import { getCloudflareContext } from '@opennextjs/cloudflare';
 import { betterAuth, type Session, type User } from 'better-auth';
 import { drizzleAdapter } from 'better-auth/adapters/drizzle';
 
@@ -5,9 +6,10 @@ import { getDb } from '@/lib/db/database';
 import * as schema from '@/lib/db/schema';
 
 export const getAuth = () => {
+  const ctx = getCloudflareContext();
   return betterAuth({
     database: drizzleAdapter(getDb(), {
-      provider: 'sqlite',
+      provider: 'pg',
       schema,
     }),
     appName: 'imagined',
@@ -17,12 +19,12 @@ export const getAuth = () => {
     },
     socialProviders: {
       github: {
-        clientId: process.env.GITHUB_CLIENT_ID as string,
-        clientSecret: process.env.GITHUB_CLIENT_SECRET as string,
+        clientId: ctx.env.GITHUB_CLIENT_ID,
+        clientSecret: ctx.env.GITHUB_CLIENT_SECRET,
       },
       google: {
-        clientId: process.env.GOOGLE_CLIENT_ID as string,
-        clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+        clientId: ctx.env.GOOGLE_CLIENT_ID,
+        clientSecret: ctx.env.GOOGLE_CLIENT_SECRET,
       },
     },
   });
