@@ -1,11 +1,12 @@
 import { getCloudflareContext } from '@opennextjs/cloudflare';
 import { betterAuth, type Session, type User } from 'better-auth';
 import { drizzleAdapter } from 'better-auth/adapters/drizzle';
+import { cache } from 'react';
 
 import { getDb } from '@/lib/db/database';
 import * as schema from '@/lib/db/schema';
 
-export const getAuth = async () => {
+export const getAuth = cache(async () => {
   const ctx = await getCloudflareContext({ async: true });
   return betterAuth({
     database: drizzleAdapter(getDb(), {
@@ -28,7 +29,7 @@ export const getAuth = async () => {
       },
     },
   });
-};
+});
 
 export type AuthSession = {
   session: Session | null;
