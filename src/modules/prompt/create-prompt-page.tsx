@@ -149,11 +149,7 @@ export function CreatePromptPage() {
                 <Button
                   onClick={handleSubmit}
                   disabled={isSubmitting || isSuccess}
-                  className={cn(
-                    'transition-all',
-                    isSubmitting && 'bg-orange-500 hover:bg-orange-600',
-                    isSuccess && 'bg-green-500 hover:bg-green-600'
-                  )}
+                  className={cn('transition-all')}
                 >
                   {isSubmitting && (
                     <Loader2Icon className="mr-2 h-4 w-4 animate-spin" />

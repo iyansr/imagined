@@ -1,4 +1,3 @@
-import type { Prompt } from '@/lib/db/schema';
 import { api } from '@/lib/trpc/client';
 
 interface UsePromptsProps {
@@ -13,9 +12,4 @@ export const usePrompts = ({ q, limit = 10 }: UsePromptsProps) => {
       getNextPageParam: (lastPage) => lastPage.nextCursor,
     }
   );
-};
-
-export type PromptsResponse = {
-  prompts: Prompt[];
-  nextCursor?: string;
 };
