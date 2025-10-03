@@ -14,6 +14,8 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { Textarea } from '@/components/ui/textarea';
+import { cn } from '@/lib/utils';
+import { useCreatePrompt } from '@/service/api/create-prompt';
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024;
 
@@ -21,7 +23,12 @@ export function CreatePromptPage() {
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [prompt, setPrompt] = useState('');
-  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const {
+    mutateAsync: createPrompt,
+    isPending: isSubmitting,
+    isSuccess,
+  } = useCreatePrompt();
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -52,43 +59,22 @@ export function CreatePromptPage() {
   const handleSubmit = async () => {
     try {
       if (!selectedImage || !prompt) {
+        toast.error('Please provide both an image and a prompt');
         return;
       }
 
-      const formData = new FormData();
-      formData.append('image', selectedImage);
-      formData.append('prompt', prompt);
-      setIsSubmitting(true);
-
-      const res = await fetch('/api/create-prompt', {
-        method: 'POST',
-        body: formData,
+      const response = await createPrompt({
+        image: selectedImage,
+        prompt,
       });
 
-      if (!res.ok) {
-        setIsSubmitting(false);
-        toast.error(res.statusText);
-        return;
+      if (response.success && response.data) {
+        toast.success('Prompt created successfully');
+        window.location.href = `/p/${response.data.id}`;
       }
-
-      const json: {
-        success: boolean;
-        data?: { id: string };
-        message?: string;
-      } = await res.json();
-
-      if (!json.success) {
-        setIsSubmitting(false);
-        toast.error(json.message);
-        return;
-      }
-
-      toast.success('Prompt created successfully');
-      window.location.href = `/p/${json.data?.id}`;
-      setIsSubmitting(false);
     } catch (error) {
-      toast.error((error as Error).message);
-      setIsSubmitting(false);
+      // Error handling is done in the hook
+      console.error('Failed to create prompt:', error);
     }
   };
 
@@ -160,8 +146,19 @@ export function CreatePromptPage() {
                 onChange={(e) => setPrompt(e.target.value)}
               />
               <div className="flex justify-end">
-                <Button onClick={handleSubmit} disabled={isSubmitting}>
-                  <Loader2Icon className="animate-spin" /> Save
+                <Button
+                  onClick={handleSubmit}
+                  disabled={isSubmitting || isSuccess}
+                  className={cn(
+                    'transition-all',
+                    isSubmitting && 'bg-orange-500 hover:bg-orange-600',
+                    isSuccess && 'bg-green-500 hover:bg-green-600'
+                  )}
+                >
+                  {isSubmitting && (
+                    <Loader2Icon className="mr-2 h-4 w-4 animate-spin" />
+                  )}
+                  {isSuccess ? 'Saved!' : 'Save'}
                 </Button>
               </div>
             </CardContent>

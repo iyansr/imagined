@@ -1,7 +1,9 @@
+import { headers } from 'next/headers';
 import { notFound } from 'next/navigation';
 
 import { PromptDetail } from '@/components/prompt-detail';
-import { getDb } from '@/lib/db/database';
+import { createCaller } from '@/server/api/root';
+import { createTRPCContext } from '@/server/api/trpc';
 
 export default async function PromptDetailPage({
   params,
@@ -10,12 +12,13 @@ export default async function PromptDetailPage({
 }) {
   const slug = (await params).slug;
 
-  const prompt = await getDb().query.prompt.findFirst({
-    where: (prompt, { eq }) => eq(prompt.id, slug),
-    with: {
-      user: true,
-    },
-  });
+  // Create tRPC caller for server-side
+  const context = await createTRPCContext({ headers: await headers() });
+  const trpc = createCaller(context);
+
+  // Fetch prompt using tRPC
+  const result = await trpc.prompt.detail({ id: slug });
+  const prompt = result.data;
 
   if (!prompt) {
     return notFound();
