@@ -39,7 +39,6 @@ export const promptRouter = createTRPCRouter({
       if (q) {
         whereConditions.push(
           or(
-            like(prompt.prompt, `%${q}%`),
             like(prompt.title, `%${q}%`),
             isNull(prompt.tags) ? undefined : arrayContains(prompt.tags, [q])
           )
