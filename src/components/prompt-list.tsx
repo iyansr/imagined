@@ -4,7 +4,7 @@ import { parseAsString, useQueryState } from 'nuqs';
 import { useEffect } from 'react';
 
 import { useDebounceValue } from '@/lib/debounce';
-import { usePrompts } from '@/service/api/prompts';
+import { api } from '@/lib/trpc/client';
 
 import { PromptCard, PromptCardSkeleton } from './prompt-card';
 
@@ -14,9 +14,12 @@ export function PromptList() {
   const debouncedQuery = useDebounceValue(query, 500);
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
-    usePrompts({
-      q: debouncedQuery,
-    });
+    api.prompt.list.useInfiniteQuery(
+      { q: debouncedQuery, limit: 12 },
+      {
+        getNextPageParam: (lastPage) => lastPage.nextCursor,
+      }
+    );
 
   // Handle infinite scrolling
   useEffect(() => {

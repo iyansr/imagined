@@ -1,4 +1,3 @@
-import { headers } from 'next/headers';
 import { notFound } from 'next/navigation';
 
 import { PromptDetail } from '@/components/prompt-detail';
@@ -13,7 +12,7 @@ export default async function PromptDetailPage({
   const slug = (await params).slug;
 
   // Create tRPC caller for server-side
-  const context = await createTRPCContext({ headers: await headers() });
+  const context = await createTRPCContext();
   const trpc = createCaller(context);
 
   // Fetch prompt using tRPC
